@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置原始类的相关信息-->
+    <bean id="userService" class="com.baizhi.dynamicproxy.UserServiceImpl">
+    </bean>
+    <bean id="userService2" class="com.baizhi.test.UserServiceImpl"></bean>
+    <bean id="orderService" class="com.baizhi.dynamicproxy.OrderServiceImpl"></bean>
+
+    <!--配置额外功能类的相关信息-->
+    <bean id="before" class="com.baizhi.dynamicproxy.Before">
+    </bean>
+    <aop:config>
+        <!--定义切入点 作用：指定给原始类中的某些原始方法添加额外功能-->
+                                        <!--给所有方法都添加额外功能-->
+        <!--方法切入点-->
+        <!--<aop:pointcut id="pc" expression="execution(*  register(String,..))"></aop:pointcut>-->
+        <!--类切入点-->
+        <!--<aop:pointcut id="pc" expression="execution(* *..UserServiceImpl.register(String,..))"></aop:pointcut>-->
+        <!--包切入点-->
+      <!--  <aop:pointcut id="pc" expression="execution(* com.baizhi.dynamicproxy..UserServiceImpl.register(String,..))"></aop:pointcut>-->
+        <!--其他切入点函数  args-->
+      <!--  <aop:pointcut id="pc" expression="args(String,..)"></aop:pointcut>-->
+        <!--其他切入点函数   within-->
+    <!--    <aop:pointcut id="pc" expression="within(com.baizhi.dynamicproxy..*)"></aop:pointcut>-->
+        <!--以注解作为维度进行切入-->
+        <aop:pointcut id="pc" expression="@annotation(com.baizhi.anonation.XingXing)"></aop:pointcut>
+        <!--组装切面-->
+        <aop:advisor advice-ref="before" pointcut-ref="pc"></aop:advisor>
+    </aop:config>
+
+
+
+</beans>
